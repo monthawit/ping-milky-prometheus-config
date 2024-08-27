@@ -1,0 +1,66 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: bbex-ping-ols-scrapeconfig
+  namespace: monitoring
+  labels:
+    prometheus: bbex-ping-ols-scrapeconfig
+spec:
+  #  jobName: milky_test_bb
+  scrapeInterval: 15s
+  #metricsPath: /metrics
+  metricsPath: /probe
+  params:
+    module: [icmp]
+  relabelings:
+    - sourceLabels: [__address__]
+      targetLabel: instance
+      regex: (.*)
+      replacement: $1
+    - sourceLabels: [region]
+      targetLabel: datacenter
+      regex: (.*)
+      replacement: $1
+    - sourceLabels: [__address__]
+      targetLabel: __param_target
+      regex: (.*)
+      replacement: $1
+    - targetLabel: __address__
+      replacement: bbex-ping-ols-01-config.monitoring.svc:9115      
+  staticConfigs:
+    #- targets:
+    #    - 8.8.8.8
+    #    - 1.1.1.1
+    #  labels:
+    #    environment: production
+    #    region: us-east
+    #- targets:
+    #    - 192.168.1.1
+    #    - 192.168.1.2
+    #  labels:
+    #    environment: staging
+    #    region: eu-central
+    - targets:
+        - 203.154.59.13
+      labels:
+        vmname: vfw-opns-cp1-app-zone
+        ipv4public: 203.154.59.13
+        ipv4private: none          
+        hostname: vfw-opns-cp1-app-zone
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: prd
+        servicename: vmaas          
+        customer: container-team
+    - targets:
+        - 103.138.176.95
+      labels:
+        vmname: habor-olsdemo
+        ipv4public: 103.138.176.95
+        ipv4private: none   
+        hostname: registryhub.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: lab
+        servicename: vmaas          
+        customer: container-team          
