@@ -1,0 +1,76 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    app.kubernetes.io/component: prometheus
+    app.kubernetes.io/instance: k8s
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 2.53.0
+  name: k8s
+  namespace: monitoring
+spec:
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: nfs-storageclass 
+        resources:
+          requests:
+            storage: 100Gi
+  alerting:
+    alertmanagers:
+    - apiVersion: v2
+      name: alertmanager-main
+      namespace: monitoring
+      port: web
+  enableFeatures: []
+  externalLabels: {}
+  image: quay.io/prometheus/prometheus:v2.53.0
+  volumeMounts:
+    - name: ols-ping-01
+      mountPath: /etc/prometheus/targets/ols-ping-01
+  volumes:
+    - name: ols-ping-01
+      configMap:
+        name: bbex-ols-ping-01-hostlist     
+  nodeSelector:
+    kubernetes.io/os: linux
+  podMetadata:
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: kube-prometheus
+      app.kubernetes.io/version: 2.53.0
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
+  probeNamespaceSelector: {}
+  probeSelector: {}
+  replicas: 2
+  resources:
+    requests:
+      memory: 400Mi
+  ruleNamespaceSelector: {}
+  ruleSelector: {}
+  scrapeConfigNamespaceSelector: {}
+  scrapeConfigSelector: {}
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
+  version: 2.53.0
+  remoteWrite:
+  - url: http://mimir-ingress.undyingk8s.olsdemo.com/api/v1/push
+    name: undyingk8s
+    basicAuth:
+      username:
+        name: kubeprom-secret-name
+        key: username
+      password:
+        name: kubeprom-secret-name
+        key: password
+    headers:
+      "X-Scope-OrgID": undyingk8s
