@@ -1,0 +1,151 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bbex-ols-ping-01-hostlist
+  namespace: monitoring
+data:
+  targets.yml: |
+    - targets:
+        - 203.154.59.13
+      labels:
+        vmname: vfw-opns-cp1-app-zone
+        ipv4public: 203.154.59.13
+        ipv4private: none          
+        hostname: vfw-opns-cp1-app-zone
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: prd
+        servicename: vmaas          
+        customer: container-team
+    - targets:
+        - 103.138.176.95
+      labels:
+        vmname: habor-olsdemo
+        ipv4public: 103.138.176.95
+        ipv4private: none   
+        hostname: registryhub.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: lab
+        servicename: vmaas          
+        customer: container-team          
+    - targets:
+        - 103.138.176.99
+      labels:
+        vmname: filebox.openlandscape.cloud
+        ipv4public: 103.138.176.99
+        ipv4private: none
+        hostname: filebox.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: lab
+        servicename: vmaas          
+        customer: container-team 
+    - targets:
+        - 203.154.59.225
+      labels:
+        vmname: hashup-cp1-okd
+        ipv4public: 203.154.59.225
+        ipv4private: none
+        hostname: hashup-cp1-okd
+        acidomain: domain3
+        infra: proxmox-ols-okd-cp1
+        servicelevel: prd
+        servicename: containerplatform          
+        customer: hashup
+    - targets:
+        - 203.154.71.27
+      labels:
+        vmname: izpal-cp1-okd
+        ipv4public: 203.154.71.27
+        ipv4private: none
+        hostname: izpal-cp1-okd
+        acidomain: domain3
+        infra: proxmox-ols-okd-cp1
+        servicelevel: prd
+        servicename: containerplatform-project1  
+        customer: izpal
+    - targets:
+        - 103.138.176.100
+      labels:
+        vmname: containerlab-vfw-opns1
+        ipv4public: 103.138.176.100
+        ipv4private: none
+        hostname: securezone.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: lab
+        servicename: vfw
+        customer: container-team
+    - targets:
+        - 103.138.176.97
+      labels:
+        vmname: ols-lab-gitlab-01
+        ipv4public: 103.138.176.97
+        ipv4private: none
+        hostname: coderepo.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: lab
+        servicename: vmass
+        customer: container-team
+    - targets:
+        - 103.138.176.145
+      labels:
+        vmname: olslab-test-fail-ip
+        ipv4public: 103.138.176.145
+        ipv4private: none
+        hostname: olslab-test-fail-ip
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: lab
+        servicename: vmass
+        customer: container-team          
+    - targets:
+        - 103.138.176.88
+      labels:
+        vmname: vm-k8s-cluster-for-ranchy
+        ipv4public: 103.138.176.88
+        ipv4private: 10.150.1.10
+        hostname: ranchy.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: poc
+        servicename: Container Service
+        customer: container-team
+    - targets:
+        - 103.138.176.96
+      labels:
+        vmname: obucket
+        ipv4public: 103.138.176.96
+        ipv4private: 10.150.1.2
+        hostname: obucket.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: poc
+        servicename: Container Service
+        customer: container-team
+    - targets:
+        - 103.138.176.98
+      labels:
+        vmname: internal-jenkins
+        ipv4public: 103.138.176.98
+        ipv4private: 10.150.1.4
+        hostname: taskmaster.openlandscape.cloud
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: poc
+        servicename: Container Service
+        customer: container-team
+    - targets:
+        - 203.154.71.80
+      labels:
+        vmname: izpal-cp1-okd
+        ipv4public: 203.154.71.80
+        ipv4private: none
+        hostname: izpal.olscp1.dedyn.io
+        acidomain: domain3
+        infra: proxmox-ols-okd-cp1
+        servicelevel: prd
+        servicename: containerplatform-project2
+        customer: izpal
