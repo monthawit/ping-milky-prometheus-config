@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: bbex-ping-ols-scrapeconfig
+  namespace: monitoring
+  labels:
+    prometheus: bbex-ping-ols-scrapeconfig
+spec:
+  #  jobName: milky_test_bb
+  scrapeInterval: 15s
+  #metricsPath: /metrics
+  metricsPath: /probe
+  params:
+    module: [icmp]
+  relabelings:
+    - sourceLabels: [__address__]
+      targetLabel: instance
+      regex: (.*)
+      replacement: $1
+    - sourceLabels: [region]
+      targetLabel: datacenter
+      regex: (.*)
+      replacement: $1
+    - sourceLabels: [__address__]
+      targetLabel: __param_target
+      regex: (.*)
+      replacement: $1
+    - targetLabel: __address__
+      replacement: bbex-ping-ols-01-config.monitoring.svc:9115      
+  fileSDConfigs:
+    - files: 
+      - /etc/prometheus/targets/ols-ping-01/targets.yml
+      refreshInterval: 30s
